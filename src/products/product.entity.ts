@@ -9,8 +9,5 @@ export class Product {
   name: string;
 
   @Column()
-  max: number;
-
-  @Column({ type: 'text', array: true })
-  membres: string[];
+  quantity: number;
 }
