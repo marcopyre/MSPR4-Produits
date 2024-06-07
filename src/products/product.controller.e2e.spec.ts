@@ -48,8 +48,7 @@ describe('ProductService', () => {
 
   const productDto: ProductDto = {
     name: 'Test Product',
-    max: 10,
-    membres: ['User 1', 'User 2'],
+    quantity: 10,
   };
 
   it('should create a product', async () => {
