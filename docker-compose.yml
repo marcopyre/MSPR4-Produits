@@ -16,6 +16,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      network: host
     container_name: nest-docker-postgres-produits
     ports:
       - '3000:3000'
