@@ -8,6 +8,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UsersService } from './users/users.service';
 import * as dotenv from 'dotenv';
+import { MetricsService } from './metrics/metrics.service';
+import { MetricsInterceptor } from './metrics/metrics.interceptor';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 dotenv.config();
 
 @Module({
@@ -23,9 +27,22 @@ dotenv.config();
       synchronize: true,
     }),
     TypeOrmModule.forFeature([Product, User]),
+    PrometheusModule.register({
+      defaultLabels: {
+        app: 'orders-api',
+      },
+    }),
     AuthModule,
   ],
-  providers: [ProductService, UsersService],
+  providers: [
+    ProductService,
+    UsersService,
+    MetricsService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: MetricsInterceptor,
+    },
+  ],
   controllers: [ProductController, AppController],
 })
 export class AppModule {}

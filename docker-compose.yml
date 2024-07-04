@@ -1,5 +1,17 @@
 version: '3.5'
 services:
+  app:
+    build: .
+    container_name: app-produits
+    ports:
+      - '3005:3000'
+    environment:
+      NODE_ENV: production
+      PROMETHEUS_PORT: 9100
+    env_file:
+      - .env.docker
+    depends_on:
+      - prometheus
   db:
     image: postgres
     restart: always
@@ -11,6 +23,7 @@ services:
     volumes:
       - ./pgdata:/var/lib/postgresql/data
     ports:
+<<<<<<< HEAD
       - '5432:5432'
   app:
     build:
@@ -18,9 +31,26 @@ services:
       dockerfile: Dockerfile
       network: host
     container_name: nest-docker-postgres-produits
+=======
+      - '5435:5432'
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus-produits
+>>>>>>> 23b75a1 (grafana working)
     ports:
-      - '3000:3000'
-    depends_on:
-      - db
+      - '9096:9090'
     volumes:
-      - ./src:/app/src
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana-product
+    ports:
+      - '3002:3000'
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+
+volumes:
+  grafana-data:

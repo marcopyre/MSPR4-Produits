@@ -1,12 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as dotenv from 'dotenv';
-import tracer from './tracer';
 dotenv.config();
+import tracer from './tracer';
 
 async function bootstrap() {
   await tracer.start();
   const app = await NestFactory.create(AppModule);
+  await tracer.start();
 
   app.enableCors({
     origin: '*',
