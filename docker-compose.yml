@@ -23,21 +23,10 @@ services:
     volumes:
       - ./pgdata:/var/lib/postgresql/data
     ports:
-<<<<<<< HEAD
       - '5432:5432'
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      network: host
-    container_name: nest-docker-postgres-produits
-=======
-      - '5435:5432'
-
   prometheus:
     image: prom/prometheus
-    container_name: prometheus-produits
->>>>>>> 23b75a1 (grafana working)
+    container_name: prometheus-products
     ports:
       - '9096:9090'
     volumes:
