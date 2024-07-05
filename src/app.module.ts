@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common';
-import { Product } from './products/product.entity';
-import { ProductService } from './products/product.service';
-import { ProductController } from './products/product.controller';
 import { AppController } from './app.controller';
 import { User } from './users/users.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UsersService } from './users/users.service';
 import * as dotenv from 'dotenv';
-import { MetricsService } from './metrics/metrics.service';
-import { MetricsInterceptor } from './metrics/metrics.interceptor';
-import { APP_INTERCEPTOR } from '@nestjs/core';
 import { PrometheusModule } from '@willsoto/nestjs-prometheus';
+import { MetricsService } from './metrics/metrics.service';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { MetricsInterceptor } from './metrics/metrics.interceptor';
+import { ProductController } from './products/product.controller';
+import { ProductService } from './products/product.service';
+import { Product } from './products/product.entity';
 dotenv.config();
 
 @Module({
@@ -29,7 +29,7 @@ dotenv.config();
     TypeOrmModule.forFeature([Product, User]),
     PrometheusModule.register({
       defaultLabels: {
-        app: 'orders-api',
+        app: 'product-api',
       },
     }),
     AuthModule,
@@ -45,4 +45,4 @@ dotenv.config();
   ],
   controllers: [ProductController, AppController],
 })
-export class AppModule {}
+export class AppModule { }
