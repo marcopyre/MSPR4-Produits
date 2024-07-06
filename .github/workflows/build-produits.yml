@@ -31,5 +31,8 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Run tests
+      - name: Run build
         run: yarn build
+
+      - name: create network
+        run: docker build -t app .
